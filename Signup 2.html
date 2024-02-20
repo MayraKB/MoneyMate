@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create new account</title>
+  <style>
+    body {
+      background-color: oldlace;
+      text-align: center;
+      font-family: 'Anton', sans-serif;
+    }
+    h1 {
+      font-size: 60px;
+      font-weight: bold;
+      border-bottom: 2px solid black;
+      padding-bottom: 10px;
+      margin-top: 20px;
+      color: black;
+    }
+    .container {
+      max-width: 400px;
+      margin: 20px auto;
+      background-color: floralwhite;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      text-align: left;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+    .button {
+      font-size: 24px;
+      padding: 10px 20px;
+      margin-top: 20px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .signin-link {
+      color: mediumblue;
+      text-decoration: none;
+    }
+    .back-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 18px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="goBack()">← Back</button>
+  <h1>Create new account</h1>
+  <div class="container">
+    <form action="./Home.html" method="post">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <label for="currency">Currency:</label>
+      <select id="currency" name="currency" required>
+        <option value="usd">USD</option>
+        <option value="aed">AED</option>
+        <option value="inr">INR</option>
+      </select>
+
+      <button type="submit" class="button">Sign up</button>
+    </form>
+  </div>
+  <p>Already registered? Sign in <a href="./Signin%204.html" class="signin-link">here</a>.</p>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expenditure</title>
+  <style>
+    body {
+      background-color: oldlace;
+      text-align: center;
+      font-family: 'Anton', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      font-size: 60px;
+      font-weight: bold;
+      border-bottom: 2px solid black;
+      padding-bottom: 10px;
+      margin-top: 20px;
+      color: black;
+    }
+    .back-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 18px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .instructions {
+      font-size: 18px;
+      color: black;
+      margin-top: 10px;
+    }
+    .date-selector {
+      margin-top: 10px;
+    }
+    .category-container {
+      background-color: floralwhite;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 400px;
+    }
+    .category-label {
+      font-size: 20px;
+      margin-top: 10px;
+      color: black;
+    }
+    .spending-input {
+      width: 100px;
+      padding: 5px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .submit-button {
+      font-size: 24px;
+      padding: 10px 20px;
+      margin-top: 20px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .chart-container {
+      border-top: 2px solid black;
+      padding-top: 20px;
+      max-width: 50%;
+      margin: 20px auto;
+    }
+    .total-spent {
+      font-size: 22px;
+      color: black;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="goBack()">← Back</button>
+  <h1>Expenditure</h1>
+  <div class="instructions">Please enter your spendings</div>
+
+  <div class="date-selector">
+    <label for="spendingDate">Date:</label>
+    <input type="date" id="spendingDate">
+  </div>
+
+  <div class="category-container">
+    <div class="category-label">Food/Dining:</div>
+    <input type="number" class="spending-input" placeholder="Enter spending" id="foodSpending">
+
+    <div class="category-label">Shopping:</div>
+    <input type="number" class="spending-input" placeholder="Enter spending" id="shoppingSpending">
+
+    <div class="category-label">Taxes:</div>
+    <input type="number" class="spending-input" placeholder="Enter spending" id="taxesSpending">
+
+    <div class="category-label">Transport:</div>
+    <input type="number" class="spending-input" placeholder="Enter spending" id="transportSpending">
+
+    <div class="category-label">Travel:</div>
+    <input type="number" class="spending-input" placeholder="Enter spending" id="travelSpending">
+
+    <div class="category-label">Other:</div>
+    <input type="number" class="spending-input" placeholder="Enter spending" id="otherSpending">
+
+    <div class="category-label">Health/Fitness:</div>
+    <input type="number" class="spending-input" placeholder="Enter spending" id="healthSpending">
+  </div>
+
+  <button class="submit-button" onclick="generatePieChart()">Submit</button>
+
+  <div class="chart-container">
+    <canvas id="myPieChart"></canvas>
+  </div>
+
+  <div class="total-spent" id="totalSpent"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+
+    function generatePieChart() {
+      const labels = ["Food/Dining", "Shopping", "Taxes", "Transport", "Travel", "Other", "Health/Fitness"];
+      const data = [
+        parseFloat(document.getElementById("foodSpending").value),
+        parseFloat(document.getElementById("shoppingSpending").value),
+        parseFloat(document.getElementById("taxesSpending").value),
+        parseFloat(document.getElementById("transportSpending").value),
+        parseFloat(document.getElementById("travelSpending").value),
+        parseFloat(document.getElementById("otherSpending").value),
+        parseFloat(document.getElementById("healthSpending").value),
+      ];
+
+      const totalSpent = data.reduce((acc, curr) => acc + (isNaN(curr) ? 0 : curr), 0);
+
+      const ctx = document.getElementById("myPieChart").getContext("2d");
+      const myPieChart = new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: ["#556B2F", "#6B8E23", "#2a3517", "#808000", "#999966", "#003300", "#1f601f"],
+          }],
+        },
+        options: {
+          legend: {
+            position: 'right',
+          },
+          tooltips: {
+            callbacks: {
+              label: function (tooltipItem, data) {
+                var dataset = data.datasets[tooltipItem.datasetIndex];
+                var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                  return previousValue + currentValue;
+                });
+                var currentValue = dataset.data[tooltipItem.index];
+                var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                return percentage + "%";
+              }
+            }
+          }
+        },
+      });
+
+      document.getElementById("totalSpent").textContent = `Total Spent: $${totalSpent.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>
+

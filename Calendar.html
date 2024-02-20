@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar</title>
+  <style>
+    body {
+      background-color: oldlace;
+      text-align: center;
+      font-family: 'Anton', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      font-size: 60px;
+      font-weight: bold;
+      border-bottom: 2px solid black;
+      padding-bottom: 10px;
+      margin-top: 20px;
+      color: black;
+    }
+    .back-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 18px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .calendar-container {
+      margin: 20px auto;
+      background-color: floralwhite;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+    }
+    .date-selector {
+      margin-top: 10px;
+    }
+    .spending-input {
+      width: 100px;
+      padding: 5px;
+      margin-top: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .submit-button {
+      font-size: 24px;
+      padding: 10px 20px;
+      margin-top: 20px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .graph-container {
+      margin-top: 20px;
+      max-width: 70%;
+      margin: 20px auto;
+      border: 2px solid black;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: floralwhite;
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="goBack()">← Back</button>
+  <h1>Calendar</h1>
+
+  <div class="calendar-container">
+    <div class="date-selector">
+      <label for="spendingDate">Choose a Day:</label>
+      <input type="date" id="spendingDate">
+    </div>
+
+    <div id="expenditureForm"></div>
+
+    <button class="submit-button" onclick="generateLineGraph()">Submit</button>
+  </div>
+
+  <div class="graph-container">
+    <canvas id="myLineChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+
+    function generateLineGraph() {
+      const selectedDate = document.getElementById("spendingDate").value;
+
+
+      if (!selectedDate) {
+        alert("Please choose a day.");
+        return;
+      }
+
+      const daysCount = 5;
+      const labels = [];
+      const data = [];
+
+      // Generates labels and initialize data array
+      for (let i = 0; i < daysCount; i++) {
+        const day = new Date(selectedDate);
+        day.setDate(day.getDate() + i);
+        const formattedDate = day.toISOString().split('T')[0];
+        labels.push(formattedDate);
+        data.push(parseFloat(document.getElementById(`day${i + 1}Spending`).value) || 0);
+      }
+
+      const ctx = document.getElementById("myLineChart").getContext("2d");
+      const myLineChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: "Daily Spending",
+            data: data,
+            borderColor: 'darkseagreen',
+            backgroundColor: 'transparent',
+            pointBackgroundColor: 'darkseagreen',
+            pointBorderColor: 'darkseagreen',
+            pointRadius: 5,
+          }],
+        },
+        options: {
+          scales: {
+            x: {
+              type: 'category',
+              labels: labels,
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Spending',
+              },
+            },
+          },
+        },
+      });
+    }
+
+    document.getElementById("spendingDate").addEventListener("change", function() {
+      const selectedDate = new Date(this.value);
+
+      // Clears previous form
+      document.getElementById("expenditureForm").innerHTML = "";
+
+      // Generates new form for the selected date and the following days
+      for (let i = 0; i < 5; i++) {
+        const day = new Date(selectedDate);
+        day.setDate(day.getDate() + i);
+        const formattedDate = day.toISOString().split('T')[0];
+
+        const formGroup = document.createElement("div");
+        formGroup.innerHTML = `<div class="date-label">${formattedDate}</div>
+                               <input type="number" class="spending-input" placeholder="Enter spending" id="day${i + 1}Spending">`;
+
+        document.getElementById("expenditureForm").appendChild(formGroup);
+      }
+    });
+  </script>
+</body>
+</html>
+

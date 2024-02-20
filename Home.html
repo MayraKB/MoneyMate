@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    body {
+      background-color: oldlace;
+      text-align: center;
+      font-family: 'Anton', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .back-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 18px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .menu-bar {
+      display: flex;
+      justify-content: space-around;
+      background-color: darkseagreen;
+      padding: 10px 0;
+      margin-top: 60px;
+    }
+    .menu-button {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    .subheading {
+      font-size: 28px;
+      margin-top: 10px;
+    }
+    .image-container {
+      margin-top: 10px;
+    }
+    .horizontal-line {
+      border-top: 2px solid black;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .line {
+      border-left: 2px solid black;
+      height: auto;
+      margin-top: 10px;
+      margin-bottom: 10px; 
+    }
+    .main-content {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
+    .notifications {
+      flex: 1;
+      background-color: floralwhite;
+      border-radius: 10px;
+      padding: 10px;
+      margin-right: 10px;
+      position: relative;
+    }
+    .notification-subheading {
+      font-size: 20px; 
+      margin-top: 10px;
+    }
+    .today-text {
+      font-size: 18px;
+    }
+    .notification-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .notification {
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .highlighted {
+      background-color: #f0f0f0;
+    }
+    .vertical-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      border-left: 2px solid black;
+    }
+    .budgets {
+      flex: 1;
+      background-color: floralwhite;
+      border-radius: 10px;
+      padding: 10px;
+      margin-left: 10px;
+    }
+    .budget-subheading {
+      font-size: 24px;
+      margin-top: 10px;
+    }
+    .slider-container {
+      width: 70%;
+      margin: auto;
+      background-color: #ddd;
+      border-radius: 10px;
+      margin-top: 10px;
+      padding: 10px;
+      position: relative;
+    }
+    .slider-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 70%;
+      background-color: darkseagreen;
+      border-radius: 10px;
+    }
+    .budget-text {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="goBack()">← Back</button>
+
+  <div class="menu-bar">
+    <a href="./Financial Goals.html" class="menu-button">Goals</a>
+    <a href="./Setting Budgets.html" class="menu-button">Budgets</a>
+    <a href="./Expenditure.html" class="menu-button">Expenditure</a>
+    <a href="./Calendar.html" class="menu-button">Calendar</a>
+    <a href="./Bills.html" class="menu-button">Bills</a>
+  </div>
+<br>
+  <div class="subheading">Spending by Category</div>
+
+  <div class="image-container">
+    <img src="https://ugc.padletcdn.com/uploads/padlet-uploads/501894136/91e8a838ae2fc48ff301456b3b24d6db/IMG_1639.jpeg?token=9oxuOBIckNUX4ApNu_QbQ3i270K_ZvQiAGgbqI1QYMFp_-z3Wc_ukMijRkwgq1-ZRDCPBW_3-h3yD8Ha8f5ystGltu6Kvi9V_usUzdYZtrMfdv7UNnSzhvSSfQC79cEHj_aimcCvZjWx1hMG2D45cMbPOiyQ-fSG4zifo_x328_V4ftLDQAY4V51kiOFdPRbcn0jO5zEa5fynuC-c-erE41slfvhLS2ZYd8HkZJ3sKJBVuXUhifAHcObhf0P7ZsM" alt="Category Image" width="400">
+  </div>
+
+  <div class="horizontal-line"></div> 
+
+  <div class="main-content">
+    <div class="notifications">
+      <div class="notification-subheading">Notifications</div>
+      <div class="today-text">Today</div>
+
+      <div class="notification-container notification">
+        <span>⚠️</span>
+        <span class="notification-subheading">High Spending</span>
+      </div>
+
+      <div class="notification-container notification">
+        <span>🔔</span>
+        <span class="notification-subheading">Bill Reminder</span>
+      </div>
+
+      <div class="notification-container notification">
+        <span>💴</span>
+        <span class="notification-subheading">Over Budget</span>
+      </div>
+    </div>
+
+    <div class="budgets">
+      <div class="subheading">Budgets</div>
+
+      <div class="slider-container">
+        <div class="slider-fill"></div>
+      </div>
+
+      <div class="budget-text">$519 of $750 used</div>
+    </div>
+  </div>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+</html>
+

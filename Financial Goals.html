@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Goals</title>
+  <style>
+    body {
+      background-color: oldlace;
+      text-align: center;
+      font-family: 'Anton', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      font-size: 60px;
+      font-weight: bold;
+      border-bottom: 2px solid black;
+      padding-bottom: 10px;
+      margin-top: 20px;
+      color: black;
+    }
+    p {
+      font-size: 18px;
+      color: gray;
+      margin-top: 10px;
+    }
+    .container {
+      max-width: 400px;
+      margin: 20px auto;
+      background-color: floralwhite;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+    .goal-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .goal-button {
+      font-size: 18px;
+      padding: 8px 15px;
+      margin-top: 10px;
+      background-color: tan;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .goal-button:hover {
+      background-color: burlywood;
+    }
+    .submit-button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin-top: 20px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .submit-button:hover {
+      background-color: olivedrab;
+    }
+    .add-goal-button {
+      font-size: 24px;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+    .add-goal-button:hover {
+      background-color: olivedrab;
+    }
+    .custom-goal-form {
+      display: none;
+      text-align: left;
+    }
+    .custom-goal-form label,
+    .custom-goal-form input,
+    .custom-goal-form button {
+      margin-top: 10px;
+    }
+    .goal-details {
+      display: none;
+      text-align: left;
+      margin-top: 20px;
+    }
+    .tips {
+      font-size: 16px;
+      margin-top: 20px;
+      color: #4CAF50;
+    }
+    .motivational-message {
+      font-size: 18px;
+      margin-top: 20px;
+      color: #007BFF;
+    }
+    .back-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 18px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="goBack()">← Back</button>
+  <h1>What are your financial goals?</h1>
+  <p>Choose a goal you're ready to work towards.</p>
+
+  <div class="container">
+    <div class="goal-container">
+      <button class="goal-button" onclick="showGoalDetails('Save Money')">I want to save money</button>
+      <button class="goal-button" onclick="showGoalDetails('Pay Debt')">I want to pay my debt off</button>
+      <button class="goal-button" onclick="showGoalDetails('Learn to Invest')">I want to learn how to invest</button>
+    </div>
+
+    <button class="submit-button" onclick="submitGoals()">Submit</button>
+
+    <div class="add-goal-button" onclick="showCustomGoalForm()">+</div>
+
+    <form class="custom-goal-form" id="customGoalForm">
+      <label for="customGoal">Your Personalized Goal:</label>
+      <input type="text" id="customGoal" name="customGoal" required>
+      <button type="button" onclick="addCustomGoal()">Add Goal</button>
+    </form>
+
+    <div class="goal-details" id="goalDetails">
+      <div class="tips" id="tipsSection"></div>
+      <div class="motivational-message">Keep going! You're on the right track towards financial success.</div>
+    </div>
+  </div>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+
+    function submitGoals() {
+      const goalDetails = document.getElementById('goalDetails');
+      goalDetails.style.display = 'block';
+    }
+
+    function showCustomGoalForm() {
+      const customGoalForm = document.querySelector('.custom-goal-form');
+      customGoalForm.style.display = 'block';
+    }
+
+    function addCustomGoal() {
+      const customGoalForm = document.querySelector('.custom-goal-form');
+      const customGoalInput = document.getElementById('customGoal');
+      const goalContainer = document.querySelector('.goal-container');
+
+      // Creates a new button for the custom goal
+      const customGoalButton = document.createElement('button');
+      customGoalButton.className = 'goal-button';
+      customGoalButton.textContent = customGoalInput.value;
+      customGoalButton.onclick = function() { showGoalDetails(customGoalInput.value); };
+      goalContainer.appendChild(customGoalButton);
+
+      // Resets the form and hide it
+      customGoalForm.reset();
+      customGoalForm.style.display = 'none';
+    }
+
+    function showGoalDetails(goal) {
+      const goalDetails = document.getElementById('goalDetails');
+      const tipsSection = document.getElementById('tipsSection');
+      const motivationalMessage = goalDetails.querySelector('.motivational-message');
+
+      // Clears previous tips
+      tipsSection.innerHTML = '';
+
+      switch(goal) {
+        case 'Save Money':
+          tipsSection.innerHTML += '<div class="tips">Tip 1: Set a monthly budget.</div>';
+          tipsSection.innerHTML += '<div class="tips">Tip 2: Create an emergency fund.</div>';
+          break;
+        case 'Pay Debt':
+          tipsSection.innerHTML += '<div class="tips">Tip 1: List all your debts and prioritize them.</div>';
+          tipsSection.innerHTML += '<div class="tips">Tip 2: Allocate extra money to pay off debts.</div>';
+          break;
+        case 'Learn to Invest':
+          tipsSection.innerHTML += '<div class="tips">Tip 1: Start by learning the basics of stock market investing.</div>';
+          tipsSection.innerHTML += '<div class="tips">Tip 2: Use a practice website where you can practice investing stocks (like a simulator).</div>';
+          break;
+  
+      }
+
+      motivationalMessage.textContent = `Keep going! You're on the right track towards financial success.`;
+
+      goalDetails.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

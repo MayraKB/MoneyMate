@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bills</title>
+  <style>
+    body {
+      background-color: oldlace;
+      text-align: center;
+      font-family: 'Anton', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      font-size: 60px;
+      font-weight: bold;
+      border-bottom: 2px solid black;
+      padding-bottom: 10px;
+      margin-top: 20px;
+      color: black;
+    }
+    .back-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 18px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .container {
+      background-color: floralwhite;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 400px;
+    }
+    .select-date, .add-bill {
+      margin-top: 20px;
+    }
+    .bill-section {
+      margin: 20px auto;
+      max-width: 400px;
+    }
+    .bill {
+      background-color: floralwhite;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .mark-as-paid {
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .add-bill-button {
+      font-size: 18px;
+      padding: 10px 20px;
+      background-color: darkseagreen;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="goBack()">← Back</button>
+  <h1>Bills</h1>
+
+  <div class="container select-date">
+    <label for="billDate">Choose today's date:</label>
+    <input type="date" id="billDate">
+  </div>
+
+  <div class="container add-bill">
+    <h2>Add Bill</h2>
+    <label for="dueDate">Due Date:</label>
+    <input type="date" id="dueDate"><br>
+
+    <label for="billName">Bill Name:</label>
+    <input type="text" id="billName"><br>
+
+    <label for="billAmount">Amount to Pay:</label>
+    <input type="number" id="billAmount" step="0.01"><br>
+
+    <label for="billCategory">Category:</label>
+    <select id="billCategory">
+      <option value="Taxes">Taxes</option>
+      <option value="Food/Dining">Food/Dining</option>
+      <option value="Insurance">Insurance</option>
+      <option value="Groceries">Groceries</option>
+      <option value="Water/Sewer">Water/Sewer</option>
+      <option value="Electricity">Electricity</option>
+      <option value="Internet/Phone services">Internet/Phone services</option>
+      <option value="Entertainment">Entertainment</option>
+      <option value="Transportation">Transportation</option>
+      <option value="Subscription services">Subscription services</option>
+      <option value="Other">Other</option>
+    </select><br>
+
+    <button class="add-bill-button" onclick="addBill()">Add Bill</button>
+  </div>
+
+  <div class="container">
+    <h2>Due/Overdue Bills</h2>
+    <div id="dueBills" class="bill-section"></div>
+  </div>
+
+  <div class="container">
+    <h2>Paid Bills</h2>
+    <div id="paidBills" class="bill-section"></div>
+  </div>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+
+    function addBill() {
+      const currentDate = document.getElementById("billDate").value;
+      const selectedDate = document.getElementById("dueDate").value;
+
+      const dueDate = document.getElementById("dueDate").value;
+      const billName = document.getElementById("billName").value;
+      const billAmount = document.getElementById("billAmount").value;
+      const billCategory = document.getElementById("billCategory").value;
+
+      const billContainer = document.createElement("div");
+      billContainer.className = "bill";
+
+      const billInfo = document.createElement("div");
+      billInfo.innerHTML = `<strong>${billCategory} - ${billName}</strong><br>Due Date: ${dueDate} - Amount: $${billAmount}`;
+
+      const markAsPaidButton = document.createElement("button");
+      markAsPaidButton.innerText = "Mark as Paid";
+      markAsPaidButton.className = "mark-as-paid";
+      markAsPaidButton.onclick = function() {
+        markAsPaid(billContainer);
+      };
+
+      billContainer.appendChild(billInfo);
+      billContainer.appendChild(markAsPaidButton);
+
+      document.getElementById("dueBills").appendChild(billContainer);
+    }
+
+    function markAsPaid(billContainer) {
+      // Removes the "Mark as Paid" button
+      const markAsPaidButton = billContainer.querySelector(".mark-as-paid");
+      markAsPaidButton.remove();
+
+      // Moves the bill container to the "Paid Bills" section
+      document.getElementById("paidBills").appendChild(billContainer);
+    }
+  </script>
+</body>
+</html>
+
